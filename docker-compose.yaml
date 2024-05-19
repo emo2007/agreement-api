@@ -1,0 +1,44 @@
+version: '3'
+# networks:
+#   blockd-net:
+#     name: blockd-net
+#     driver: bridge
+
+volumes:
+  agreement-api-data: {}
+
+services:
+  agreement-api:
+    container_name: agreement-api
+    image: agreement-api:latest
+    ports:
+      - 3113:8080
+    # networks:
+    #   - blockd-net
+    # depends_on:
+    #   agreement-api-db:
+    #     condition: service_healthy
+    profiles: [agreement]
+
+  # agreement-api-db:
+  #   container_name: agreement-api-db
+  #   image: postgres:16
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=blockd
+  #     - POSTGRES_PASSWORD=blockd
+  #     - POSTGRES_DB=blockd
+  #   volumes:
+  #     - agreement-api-data:/var/lib/postgresql/data
+  #     - ./migrations/agreementapi.sql:/docker-entrypoint-initdb.d/init.sql
+  #   ports:
+  #     - 8434:5432
+  #   networks:
+  #     - blockd-net
+  #   healthcheck:
+  #     test: pg_isready -U blockd -d blockd
+  #     interval: 1s
+  #     timeout: 5s
+  #     retries: 10
+  #     start_period: 5s
+  #   profiles: [license, database, noback]
