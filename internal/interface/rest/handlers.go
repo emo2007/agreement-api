@@ -1,7 +1,6 @@
 package rest
 
 import (
-	"fmt"
 	"math/rand"
 	"net/http"
 )
@@ -11,5 +10,9 @@ func (s *Server) handleOrderDelivered(w http.ResponseWriter, r *http.Request) ([
 
 	// todo unmock
 
-	return []byte(fmt.Sprintf("%d", rand.Int31n(2))), nil
+	if rand.Int31n(2) > 0 {
+		return []byte("true"), nil
+	}
+
+	return []byte("false"), nil
 }
